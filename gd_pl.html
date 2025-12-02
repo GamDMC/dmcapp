@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>YouTube Embeds</title>
+  <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+  // Array of YouTube video IDs
+  const videoIDs = ["ztH5MEFxOoE", "GdzcbcOUZgc", "i7cYWbRC86c","Wm7IbF3-63E","e6N0g8FzvsM","t1i6_pwUsLc","4M_4rGEOum0","mSTcm_QP7oM","dVcL1rWVdBE","Q2lYpf6WwSU"
+    ,"RvuTKIagFVQ","jCNyNeIN1dI","kAgl4ULEQk8"
+  ];
+
+  const players = [];
+
+  // Dynamically create iframe elements
+  videoIDs.forEach((id, index) => {
+    const container = document.createElement('div');
+    container.className = 'video-box';
+
+    const iframe = document.createElement('iframe');
+    iframe.id = `player${index + 1}`;
+    iframe.src = `https://www.youtube.com/embed/${id}?enablejsapi=1`;
+    container.appendChild(iframe);
+
+    document.body.appendChild(container);
+  });
+
+  // YouTube API callback
+  function onYouTubeIframeAPIReady() {
+    videoIDs.forEach((_, i) => {
+      players[i] = new YT.Player(`player${i+1}`, {
+        events: {
+          onStateChange: onPlayerStateChange
+        }
+      });
+    });
+  }
+
+  // Pause other videos when one plays
+  function onPlayerStateChange(event) {
+    if (event.data === YT.PlayerState.PLAYING) {
+      players.forEach(p => {
+        if (p !== event.target) p.pauseVideo();
+      });
+    }
+  }
+</script>
+
+</body>
+</html>
