@@ -11,7 +11,6 @@
 
 <script src="https://www.youtube.com/iframe_api"></script>
 <script>
-  // Get video ID from URL ?vid=
   const params = new URLSearchParams(window.location.search);
   const videoID = params.get('vid');
 
@@ -20,7 +19,7 @@
   } else {
     const iframe = document.createElement('iframe');
     iframe.id = 'player';
-    iframe.src = `https://www.youtube.com/embed/${videoID}?enablejsapi=1`;
+    iframe.src = `https://www.youtube.com/embed/${videoID}?enablejsapi=1&autoplay=1&mute=1`;
     iframe.allow = "autoplay; encrypted-media";
     iframe.allowFullscreen = true;
 
@@ -33,6 +32,7 @@
     }
   }
 </script>
+
 
 </body>
 </html>
