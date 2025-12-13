@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>YouTube Embed via URL</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    iframe {
+      width: 560px;
+      height: 315px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="player-container"></div>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+  // Get video ID from URL ?vid=
+  const params = new URLSearchParams(window.location.search);
+  const videoID = params.get('vid');
+
+  if (!videoID) {
+    document.body.innerHTML = "<h2>No video ID provided</h2>";
+  } else {
+    // Create iframe
+    const iframe = document.createElement('iframe');
+    iframe.id = 'player';
+    iframe.src = `https://www.youtube.com/embed/${videoID}?enablejsapi=1`;
+    iframe.allow = "autoplay; encrypted-media";
+    iframe.allowFullscreen = true;
+
+    document.getElementById('player-container').appendChild(iframe);
+  }
+
+  // YouTube API callback
+  function onYouTubeIframeAPIReady() {
+    if (videoID) {
+      new YT.Player('player');
+    }
+  }
+</script>
+
+</body>
+</html>
